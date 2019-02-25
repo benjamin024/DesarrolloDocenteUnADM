@@ -1,0 +1,108 @@
+.btn-success{
+    background-color: #B38E5D !important;
+    border-color: #B38E5D !important;
+}
+
+.btn-success.focus, .btn-success:focus {
+    box-shadow: 0 0 0 0.2rem rgba(179,142,93,.5) !important;
+}
+
+.btn-danger{
+    background-color: #9D2449 !important;
+    border-color: #9D2449 !important;
+}
+
+.aguila{
+    background-image: url(../img/marca_agua.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-y: 125px;
+}
+
+.table thead th{
+    background-color: #621132;
+    color: #FFF;
+}
+
+
+.table tbody tr {
+    background-color: #FFF;
+}
+
+.separador{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1.5px solid #621132 !important;
+}
+
+.bg-nav{
+    background-color: #4E232E !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,.8);
+}
+
+.bg-successM{
+    background-color: #621132 !important;
+    color: #FFF;
+}
+
+/* The switch - the box around the slider */
+        .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        }
+        /* Hide default HTML checkbox */
+        .switch input {display:none;}
+
+        /* The slider */
+        .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #D4C19C;
+        -webkit-transition: .4s;
+        transition: .4s;
+        }
+
+        .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        }
+
+        input:checked + .slider {
+        background-color: #621132;
+        }
+
+        input:focus + .slider {
+        box-shadow: 0 0 1px #621132;
+        }
+
+        input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+        border-radius: 34px;
+        }
+
+        .slider.round:before {
+        border-radius: 50%;
+        }

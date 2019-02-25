@@ -1,0 +1,53 @@
+.docente{
+    border: 0px;
+    border-bottom: solid 3px #B38E5D;
+}
+
+.docente:hover{
+    background-color: #D4C19C !important;
+    color: #FFF;
+}
+
+.boton{
+    decoration: none;
+    color: white !important;
+}
+.boton:hover{
+    decoration: none;
+    color: white !important;
+}
+.hidden{
+    display: none;
+}
+
+.activo{
+    background-color: #D4C19C !important;
+    color: #FFF;
+}
+
+.pestana{
+    font-size: 14px;
+    color: #621132 !important;
+    font-weight: bold;
+}
+
+.pestana:hover{
+    color: #B38E5D !important;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    border-top-color: #621132;
+    border-left-color: #621132;
+    border-right-color: #621132;
+}
+
+.activa{
+    color: white !important;
+    background-color: #621132 !important;
+}
+.activa:hover{
+    color: white !important;
+}
+.texto{
+    background-color: #FFF !important;
+}
