@@ -35,7 +35,7 @@
                     <a href="materias.php" class="boton"><button class="btn btn-success">Regresar</button></a><br><br>
                 </center>
             </div>
-            <div class="col-md-10 align-items-center" style="padding: 0 5%; overflow-y: auto;">
+            <div class="col-md-10 align-items-center" style="padding: 0 5%; height: 100%; overflow-y: auto;">
                 <center>
                     <br><h4><?=@$_GET["carrera"]?></h4>                  
                 </center>

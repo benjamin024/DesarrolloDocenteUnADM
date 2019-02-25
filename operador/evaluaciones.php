@@ -52,7 +52,7 @@
                     <a href="estadisticasEvaluacion.php" class="boton"><button class="btn btn-success">Estadísticas</button></a><br><br>
                 </center>
             </div>
-            <div class="col-md-10 align-items-center" style="padding: 0 5%; overflow-y: auto;">
+            <div class="col-md-10 align-items-center" style="padding: 0 5%; height: 100%; overflow-y: auto;">
                 <center>
                     <br><h4>Evaluaciones</h4><br>                    
                 </center>

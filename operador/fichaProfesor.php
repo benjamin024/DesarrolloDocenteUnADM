@@ -132,7 +132,7 @@
                     <a href="../operador/calificacionesProfesor.php?folio=<?=$folio?>"><button style="width: 100%;" class="btn btn-success">Ver calificaciones</button></a><br><br>
                 </center>
             </div>
-            <div class="col-md-10 align-items-center" style="padding: 0 5%;  overflow-y: auto;">
+            <div class="col-md-10 align-items-center" style="padding: 0 5%; height: 100%; overflow-y: auto;">
                 
                 <center><br><h4>Información general de <?=$docente["nombres"]." ".$docente["apPaterno"]." ".$docente["apMaterno"]?></h4></center><br>
                 <div class="row">

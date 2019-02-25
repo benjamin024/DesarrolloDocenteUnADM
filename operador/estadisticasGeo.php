@@ -249,7 +249,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-9 align-items-center mapaMx" style="padding: 0; position: relative; overflow-y: auto;">
+            <div class="col-md-9 align-items-center mapaMx" style="padding: 0; position: relative; height: 100%; overflow-y: auto;">
             	<iframe name="iframeMapa" id="iframeMapa" src="mapa.php" width="100%" height="100%" frameborder="0"></iframe>
                 <!-- The Modal -->
 		        <div class="modal fade" id="modalIni">

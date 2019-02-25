@@ -40,7 +40,7 @@
                     <a href="#" class="boton"><button class="btn btn-danger">Registrar nuevo</button></a><br><br>
                 </center>
             </div>
-            <div class="col-md-10 align-items-center" style="padding: 0 5%; overflow-y: auto;">
+            <div class="col-md-10 align-items-center" style="padding: 0 5%; height: 100%; overflow-y: auto;">
                 <?php
                     if(!$periodoActual)
                         echo "<center>

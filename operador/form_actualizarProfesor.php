@@ -198,7 +198,7 @@
                     <a href="fichaProfesor.php?folio=<?=$folio?>" class="boton"><button style="width: 100%;" class="btn btn-danger">Cancelar</button></a><br><br>
                 </center>
             </div>
-            <div class="col-md-10 align-items-center" style="padding: 0 5%; overflow-y: auto;">
+            <div class="col-md-10 align-items-center" style="padding: 0 5%; height: 100%; overflow-y: auto;">
                 <center><br><h4>Actualizar la información de <?=$docente["nombres"]." ".$docente["apPaterno"]." ".$docente["apMaterno"]?></h4></center><br>
                 <div class="row">
                     <div class="col-md-2">

@@ -66,7 +66,7 @@
                     ?>
                 </center>
             </div>
-            <div class="col-md-10 align-items-center" style="padding: 0 5%; overflow-y: auto;">
+            <div class="col-md-10 align-items-center" style="padding: 0 5%; height: 100%; overflow-y: auto;">
                 <center>
                     <br><h4>Asesores registrados</h4><br>
                     <div class="col-md-8" style="padding: 0 !important;">
