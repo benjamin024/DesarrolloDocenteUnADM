@@ -89,7 +89,7 @@
         }
 
         public function getPromediosCriterio($criterio, $evaluacion, $periodo){
-            $query = "SELECT i.idIndicador, i.titulo, AVG(ic.calificacion) calPromedio FROM evaluaciondocente ed INNER JOIN indicadorcalificacion ic ON ed.idEvaluacionDocente = ic.idEvaluacion INNER JOIN indicador i ON i.idIndicador = ic.indicador WHERE ed.evaluacion = $evaluacion AND ed.periodo = '$periodo' AND i.idCriterio = $criterio GROUP BY ic.indicador;";
+            $query = "SELECT i.idIndicador, IF(i.titulo IS NULL or i.titulo = '', c.nombre, i.titulo) titulo, AVG(ic.calificacion) calPromedio FROM evaluaciondocente ed INNER JOIN indicadorcalificacion ic ON ed.idEvaluacionDocente = ic.idEvaluacion INNER JOIN indicador i ON i.idIndicador = ic.indicador INNER JOIN criterio c ON i.idCriterio = c.idCriterio WHERE ed.evaluacion = $evaluacion AND ed.periodo = '$periodo' AND i.idCriterio = $criterio GROUP BY ic.indicador;";
             $resultado = query($query);
             $lista = array();
             $i = 0;

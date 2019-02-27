@@ -15,7 +15,8 @@
     $evaluacion =@$_GET["evaluacion"];
     $periodo =@$_GET["periodo"];
 
-    $criterios = $e->getCriterios($evaluacion);
+    if($evaluacion && $periodo)
+        $criterios = $e->getCriterios($evaluacion);
 ?>
 <!DOCTYPE html>
 <html>
