@@ -14,6 +14,8 @@
 
     $evaluacion =@$_GET["evaluacion"];
     $periodo =@$_GET["periodo"];
+
+    $criterios = $e->getCriterios($evaluacion);
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,6 +28,7 @@
     <link rel="stylesheet" href="../css/fontawesome-all.css">
     <link rel="stylesheet" href="../css/colores_institucionales.css">
     <link rel="stylesheet" href="../css/docentes.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
         function muestraLista(){
             $(document).ready(function(){{$('#modalLista').modal('toggle')}});
@@ -35,6 +38,43 @@
             $.post("../clases/ajax.php", {ACCION: "getIdEvaluacionDocente", docente: folio, evaluacion: <?=$evaluacion?>, periodo: '<?=$periodo?>'}, function(result){
                     window.location = "resumenEvaluacion.php?evaluacion="+result;
                 });
+        }
+
+        google.charts.load('current', {packages: ['corechart']});
+
+        function drawChart(data, criterio) {
+            var arreglo = [];
+            data.split("--").forEach(function(element) {
+              arreglo.push(element);
+            });
+            $("#modal-title").html(criterio);
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Indicador');
+            data.addColumn('number', 'Calificación');
+            for (var i = 0; i < arreglo.length; i++) {
+                data.addRow([arreglo[i].split(",")[0], Math.round(arreglo[i].split(",")[1] * 100) / 100]);
+            }
+
+            // Set chart options
+            var options = {
+            width: 795,
+            height: 400,
+            legend: { position: "none" },
+            bar: {groupWidth: 40},
+            colors: ['#9D2449'],
+            hAxis: {ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            };
+
+            // Instantiate and draw our chart, passing in some options.          
+            var chart = new google.visualization.BarChart(document.getElementById('chart'));
+            chart.draw(data, options);
+          
+        }
+
+        function addBotonGraficaGeneral(){
+            let boton = "<button class='btn btn-success' onclick='verGraficaGeneral();'>Ver gráfica general</button><br><br>"
+            document.getElementById("latmenu").innerHTML += boton;
         }
     </script>
 </head>
@@ -55,7 +95,7 @@
                     
                 </center>
             </div>
-            <div class="col-md-10 align-items-center">
+            <div class="col-md-10 align-items-center" style="overflow-y: auto; height: 100%;">
                 <br>
                 <center>
                     <h3 id="titulo">Estadísticas sobre evaluaciones</h3><br>
@@ -89,9 +129,28 @@
                             echo "<br><h5>Selecciona una evaluación y un periodo para ver sus estadísticas</h5>";
                         else{
                             $docentes = $es->getDocentesEvaluacion($evaluacion, $periodo);
+                            if(count($docentes))
+                                echo "<script>addBotonGraficaGeneral();</script>";
                     ?> 
                         <br>
                         <div class="col-md-5 btn-danger" style="cursor: pointer; border-radius: 5px;" <?php if(count($docentes) > 0){?>onclick="muestraLista();"<?php }?>><b><?=count($docentes)?></b> docentes han sido evaluados</div>
+                        <div class="col-md-10 row" style="margin-top: 35px;">
+                    <?php
+                            if(count($docentes) > 0){
+                                foreach($criterios as $c){
+                                    $promedios = implode("--",$es->getPromediosCriterio($c["idCriterio"], $evaluacion, $periodo));
+                    ?>
+                            <div class="col-md-4" style="margin-bottom: 30px;" onclick="$('#modalGrafica').modal('toggle'); setTimeout(function(){drawChart('<?=$promedios?>', '<?=$c["nombre"]?>');}, 150);">
+                                <div id="bloque" class="row h-100" style="position: relative; width: 100%; height: 130px; cursor: pointer; border-radius: 10px; padding: 10px; background-color: #B38E5D">
+                                    <h6 id="bloque-texto" style="margin: auto; color: #FFF;"><?=$c['nombre']?></h6>
+                                </div>
+                            </div>
+                    <?php
+                                }
+                            }
+                    ?>
+                        
+                        </div>
                     <?php
                         }
                     ?>
@@ -142,6 +201,31 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+                </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- The Modal -->
+        <div class="modal fade" id="modalGrafica">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" >
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body row" style="padding: 0px;">
+                    <div id="chart" style="padding-left: 15px;"></div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
                 </div>
 
                 </div>

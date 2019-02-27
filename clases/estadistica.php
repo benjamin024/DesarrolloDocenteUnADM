@@ -87,5 +87,17 @@
             }
             return $lista;
         }
+
+        public function getPromediosCriterio($criterio, $evaluacion, $periodo){
+            $query = "SELECT i.idIndicador, i.titulo, AVG(ic.calificacion) calPromedio FROM evaluaciondocente ed INNER JOIN indicadorcalificacion ic ON ed.idEvaluacionDocente = ic.idEvaluacion INNER JOIN indicador i ON i.idIndicador = ic.indicador WHERE ed.evaluacion = $evaluacion AND ed.periodo = '$periodo' AND i.idCriterio = $criterio GROUP BY ic.indicador;";
+            $resultado = query($query);
+            $lista = array();
+            $i = 0;
+            while ($indicador = $resultado->fetch_assoc()) {
+                $lista[$i] = $indicador["titulo"].",".$indicador["calPromedio"];
+                $i++;
+            }
+            return $lista;
+        }
     }
 ?>
