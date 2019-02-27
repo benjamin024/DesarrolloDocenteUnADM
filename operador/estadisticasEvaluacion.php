@@ -15,8 +15,17 @@
     $evaluacion =@$_GET["evaluacion"];
     $periodo =@$_GET["periodo"];
 
-    if($evaluacion && $periodo)
+    if($evaluacion && $periodo){
         $criterios = $e->getCriterios($evaluacion);
+
+        $promediosCrit = $es->getPromediosEvaluacion($evaluacion, $periodo);
+        $prom_criterios = array();
+        $prom_promedios = array();
+        foreach($promediosCrit as $pc){
+            $prom_criterios[] = "{\"label\":\"".$pc["nombre"]."\"}";
+            $prom_promedios[] = "{\"value\":\"".$pc["calPromedio"]."\"}";
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,7 +39,49 @@
     <link rel="stylesheet" href="../css/colores_institucionales.css">
     <link rel="stylesheet" href="../css/docentes.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- FusionCharts files-->
+    <script type="text/javascript" src="../js/fusioncharts.js"></script>
+    <script type="text/javascript" src="../js/fusioncharts.charts.js"></script>
+    <script type="text/javascript" src="../js/powercharts.js"></script>
+
+    <!-- jQuery plugin -->
+    <script type="text/javascript" src="../js/jquery-plugin.js"></script>
     <script>
+        function verGrafica(){
+            $("#modal-title").html("Promedios generales de la evaluación");
+            $('#modalGrafica').modal('toggle');
+            $("#chart").insertFusionCharts({
+            type: 'radar',
+            width: '90%',
+            height: '400',
+            dataFormat: 'json',
+            dataSource: {
+                "chart": {
+                    "showBorder": false,
+                    "bgColor": "#FFFFFF",
+                    "yAxisMaxValue": 10,
+                    "dataFillColor": "#FF0000"
+                },
+                "categories": [{
+                    "category": [<?=implode(",", $prom_criterios)?>]
+                }],
+                "dataset": [{
+                    "color": "9D2449",
+                    "data": [<?=implode(",", $prom_promedios)?>]
+                }]
+            }
+            });
+        }
+
+
+        function addBotonGraficaGeneral(){
+            let boton = "<button class='btn btn-success' onclick='verGrafica();'>Ver gráfica general</button><br><br>"
+            document.getElementById("latmenu").innerHTML += boton;
+        }
+
+
         function muestraLista(){
             $(document).ready(function(){{$('#modalLista').modal('toggle')}});
         }
@@ -71,11 +122,6 @@
             var chart = new google.visualization.BarChart(document.getElementById('chart'));
             chart.draw(data, options);
           
-        }
-
-        function addBotonGraficaGeneral(){
-            let boton = "<button class='btn btn-success' onclick='verGraficaGeneral();'>Ver gráfica general</button><br><br>"
-            document.getElementById("latmenu").innerHTML += boton;
         }
     </script>
 </head>
@@ -233,7 +279,6 @@
             </div>
         </div>
     </div>
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+
 </body>
 </html>
