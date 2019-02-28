@@ -77,7 +77,7 @@
         }
 
         public function getDocentesEvaluacion($idEvaluacion, $periodo){
-            $query = "SELECT d.* FROM evaluaciondocente ed INNER JOIN docente d ON ed.docente = d.folio WHERE ed.evaluacion = $idEvaluacion AND ed.periodo = '$periodo' AND ed.fechaTermino IS NOT NULL;";
+            $query = "SELECT d.* FROM evaluacionDocente ed INNER JOIN docente d ON ed.docente = d.folio WHERE ed.evaluacion = $idEvaluacion AND ed.periodo = '$periodo' AND ed.fechaTermino IS NOT NULL;";
             $resultado = query($query);
             $lista = array();
             $i = 0;
@@ -89,7 +89,7 @@
         }
 
         public function getPromediosCriterio($criterio, $evaluacion, $periodo){
-            $query = "SELECT i.idIndicador, IF(i.titulo IS NULL or i.titulo = '', c.nombre, i.titulo) titulo, AVG(ic.calificacion) calPromedio FROM evaluaciondocente ed INNER JOIN indicadorcalificacion ic ON ed.idEvaluacionDocente = ic.idEvaluacion INNER JOIN indicador i ON i.idIndicador = ic.indicador INNER JOIN criterio c ON i.idCriterio = c.idCriterio WHERE ed.evaluacion = $evaluacion AND ed.periodo = '$periodo' AND i.idCriterio = $criterio GROUP BY ic.indicador;";
+            $query = "SELECT i.idIndicador, IF(i.titulo IS NULL or i.titulo = '', c.nombre, i.titulo) titulo, AVG(ic.calificacion) calPromedio FROM evaluacionDocente ed INNER JOIN indicadorCalificacion ic ON ed.idEvaluacionDocente = ic.idEvaluacion INNER JOIN indicador i ON i.idIndicador = ic.indicador INNER JOIN criterio c ON i.idCriterio = c.idCriterio WHERE ed.evaluacion = $evaluacion AND ed.periodo = '$periodo' AND i.idCriterio = $criterio GROUP BY ic.indicador;";
             $resultado = query($query);
             $lista = array();
             $i = 0;
@@ -101,7 +101,7 @@
         }
 
         public function getPromediosEvaluacion($evaluacion, $periodo){
-            $query = "SELECT c.idCriterio, c.nombre, AVG(ic.calificacion) calPromedio FROM criterio c INNER JOIN indicador i ON c.idCriterio = i.idCriterio INNER JOIN indicadorcalificacion ic ON i.idIndicador = ic.indicador INNER JOIN evaluaciondocente ed ON ic.idEvaluacion = ed.idEvaluacionDocente WHERE ed.evaluacion = $evaluacion AND ed.periodo = '$periodo' GROUP BY c.idCriterio;";
+            $query = "SELECT c.idCriterio, c.nombre, AVG(ic.calificacion) calPromedio FROM criterio c INNER JOIN indicador i ON c.idCriterio = i.idCriterio INNER JOIN indicadorCalificacion ic ON i.idIndicador = ic.indicador INNER JOIN evaluacionDocente ed ON ic.idEvaluacion = ed.idEvaluacionDocente WHERE ed.evaluacion = $evaluacion AND ed.periodo = '$periodo' GROUP BY c.idCriterio;";
             $resultado = query($query);
             $lista = array();
             $i = 0;
