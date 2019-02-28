@@ -214,7 +214,7 @@
                                     echo "<iframe src='../img/estadisticas/1/".$archivo['nombre']."' width='100%' height='400px'></iframe>";
                                     break;
                                 case 3:
-                                    echo "<iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http://benjamindorantes.hol.es/UnADM/img/estadisticas/1/".$archivo['nombre']."' width='100%' height='400px' frameborder='0'></iframe>";
+                                    echo "<iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http://desarrollodocente.com.mx/img/estadisticas/estadisticas/1/".$archivo['nombre']."' width='100%' height='400px' frameborder='0'></iframe>";
                             }
                             echo "<button type='button' class='btn btn-danger btn-sm' onclick=\"abreModal('".$archivo["id"]."');\">Eliminar archivo</button><br><br><br>";
                         }
