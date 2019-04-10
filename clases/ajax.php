@@ -108,4 +108,33 @@
         echo $id;
         exit(1);
     }
+
+    if($ACCION == "guardarImagen"){
+        $data = $_POST["imagen"];
+        $nombre = $_POST["nombre"];
+        $url = $_POST["url"];
+        if (preg_match('/^data:image\/(\w+);base64,/', $data, $type)) {
+            $data = substr($data, strpos($data, ',') + 1);
+            $type = strtolower($type[1]); // jpg, png, gif
+
+            if (!in_array($type, [ 'jpg', 'jpeg', 'gif', 'png' ])) {
+                echo -1;
+                exit(1);
+            }
+
+            $data = base64_decode($data);
+
+            if ($data === false) {
+                echo -2;
+                exit(1);
+            }
+        } else {
+            echo -3;
+            exit(1);
+        }
+
+        file_put_contents("{$url}{$nombre}.{$type}", $data);
+        echo 1;
+        exit(1);
+    }
 ?>

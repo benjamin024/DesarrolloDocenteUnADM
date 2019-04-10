@@ -32,41 +32,7 @@
     <link rel="stylesheet" href="../css/colores_institucionales.css">
     <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
     <script type='text/javascript'>
-        // Load the Visualization API and the piechart package.
-        google.charts.load('current', {'packages':['corechart']});
 
-        // Set a callback to run when the Google Visualization API is loaded.
-        google.charts.setOnLoadCallback(graficaEvaluacion);
-        
-        function graficaEvaluacion(){
-            // Create our data table.
-            data = new google.visualization.arrayToDataTable([
-            ['Grado máximo de estudios', 'Número de docentes'],
-            ['Licenciatura', 17],['Maestría', 59],['Doctorado', 14],['Sin especificar', 29],        ]); 
-
-            // Set chart options
-            var options = {'title':'Grado máximo de estudio de los docentes',
-                            'fontSize': 12,
-                            'width':800,
-                            'height':500,
-                            'is3D': true,
-                            'titleTextStyle':{
-                                'fontSize': 16,
-                                'bold': true
-                            },
-                            'legend':{
-                                'alignment': 'center'
-                            }
-                            };
-    
-            // Instantiate and draw our chart, passing in some options.
-            var graficaEvaluacion = document.getElementById('graficaEvaluacion');
-            chart = new google.visualization.PieChart(graficaEvaluacion);
-            google.visualization.events.addListener(chart, 'ready', function(){
-                graficaEvaluacion.innerHTML = "<img src='" + chart.getImageURI()+"'>";
-            });
-            chart.draw(data, options);
-        }
     </script>
 </head>
 <body>
@@ -91,7 +57,7 @@
                 <center id='latmenu'>
                     <a href="calificacionesProfesor.php?folio=<?=$folio?>" class="boton"><button class="btn btn-success">Regresar</button></a><hr>
                     <button class="btn btn-success" onclick="verGrafica();">Ver gráfico</button>
-                    <!--<br><br><a href="resumenEvaluacionPDF.php?evaluacion=<?=$idEvaluacionDocente?>" target="_blank" class="boton"><button class="btn btn-success">Resumen en PDF</button></a>-->
+                    <br><br><a href="resumenEvaluacionPDF.php?evaluacion=<?=$idEvaluacionDocente?>" target="_blank" class="boton" id="btnResumen" hidden><button class="btn btn-success">Resumen en PDF</button></a>
                     <?php
                         if($_SESSION["tipo"] == 2){
                     ?>
@@ -106,6 +72,7 @@
                 <center>
                     <br><h4>Reporte de resultados de la evaluación</h4><br>                    
                 </center>
+                
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
@@ -153,6 +120,9 @@
                     $dataIndicadores = array();
                     $dataCalificaciones = array();
 
+                            $dataIndicadoresG = array();
+                            $dataCalificacionesG = array();
+
                     $criterios = $e->getCriterios($evaluacionBD["idEvaluacion"]);
                     foreach($criterios as $criterio){
                         $indicadores = $e->getIndicadores($criterio["idCriterio"]);
@@ -166,14 +136,20 @@
                                 <td witdh="20%" class="bg-successM" style="color: #FFF; font-weight: bold; text-align: center;">Calificación</td>
                             </tr>
                             <?php
+
                             foreach($indicadores as $indicador){
-                                if($indicador["titulo"])
+                                if($indicador["titulo"]){
                                     $auxString = "{\"label\":\"".$indicador["titulo"]." (".$criterio["nombre"].")\"}";
-                                else
+                                    $dataIndicadoresG[] = $indicador["titulo"]." (".$criterio["nombre"].")";
+                                }
+                                else{
                                     $auxString = "{\"label\":\"".$criterio["nombre"]."\"}";
+                                    $dataIndicadoresG[] = $criterio["nombre"];
+                                }
                                 $dataIndicadores[] = $auxString;
                                 $calificacion = query("SELECT calificacion FROM indicadorCalificacion WHERE idEvaluacion = $idEvaluacionDocente AND indicador = ".$indicador["idIndicador"])->fetch_assoc()["calificacion"];
                                 $dataCalificaciones[] = "{\"value\":\"$calificacion\"}";
+                                $dataCalificacionesG[] = $calificacion;
                                 $evaluacion = query("SELECT texto FROM escalaEvaluacion WHERE puntos = $calificacion")->fetch_assoc()["texto"];
                                 $msjEvaluacion = query("SELECT texto FROM indicadorEscala WHERE escala = $calificacion AND idIndicador = ".$indicador["idIndicador"])->fetch_assoc()["texto"];
                                 if($indicador["titulo"]){
@@ -231,7 +207,7 @@
                 
             </div>
         </div>
-        
+        <div id="graficaEvaluacion" style="width: 795; height: 400;"></div>
         <div class="modal fade" id="modalGrafica">
             <div class="modal-dialog modal-lg" style="max-width: 1200px !important;">
                 <div class="modal-content">
@@ -285,6 +261,55 @@
             }
             });
 		}
+
+        // Load the Visualization API and the piechart package.
+        google.charts.load('current', {'packages':['corechart']});
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(graficaEvaluacion);
+        
+        function graficaEvaluacion(){
+            // Create our data table.
+            data = new google.visualization.DataTable();
+
+            data.addColumn('string', 'Criterio');
+            data.addColumn('number', 'Calificación');
+            <?php
+                for($i = 0; $i < count($dataIndicadoresG); $i++){
+            ?>
+                data.addRow(["<?=$dataIndicadoresG[$i]?>", Math.round(<?=$dataCalificacionesG[$i]?> * 100) / 100]);
+            <?php
+                }
+            ?>
+
+            // Set chart options
+            var options = {
+            width: 795,
+            height: 400,
+            title: 'Gráfica de calificaciones obtenidas por indicador',
+            chartArea: {top: 10, left: 180},
+            legend: { position: "none" },
+            colors: ['#9D2449'],
+            hAxis: {ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            };
+    
+            // Instantiate and draw our chart, passing in some options.
+            var graficaEvaluacion = document.getElementById('graficaEvaluacion');
+            chart = new google.visualization.ColumnChart(graficaEvaluacion);
+            google.visualization.events.addListener(chart, 'ready', function(){
+                console.log(chart.getImageURI());
+                graficaEvaluacion.innerHTML = "<img src='" + chart.getImageURI()+"'>";
+                $.post("../clases/ajax.php", {ACCION: "guardarImagen", imagen: chart.getImageURI(), nombre: "evaluacion_<?=$idEvaluacionDocente?>", url: "../img/graficas_evaluaciones/"}, 
+                    function(result){
+                        if(result == 1){
+                            $("#graficaEvaluacion").attr("hidden", true);
+                            $("#btnResumen").attr("hidden", false);
+                        }
+                    }
+                );
+            });
+            chart.draw(data, options);
+        }
 	</script>
 </body>
 </html>

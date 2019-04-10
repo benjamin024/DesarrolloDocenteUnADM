@@ -16,6 +16,9 @@
     <link rel="stylesheet" type="text/css" media="screen" href="../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../css/fontawesome-all.css">
     <link rel="stylesheet" href="../css/colores_institucionales.css">
+
+    <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
     <style>
         .link{
             color: #000;
@@ -34,6 +37,50 @@
             text-decoration: none !active;
         }
     </style>
+    <script>
+        google.charts.load('current', {packages: ['corechart']});
+
+        function drawChart(data, evaluacion) {
+            var arreglo = [];
+            data.split("--").forEach(function(element) {
+              arreglo.push(element);
+            });
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Indicador');
+            data.addColumn('number', 'Calificación');
+            for (var i = 0; i < arreglo.length; i++) {
+                data.addRow([arreglo[i].split(",")[0], Math.round(arreglo[i].split(",")[1] * 100) / 100]);
+            }
+
+            // Set chart options
+            var options = {
+            title: evaluacion,
+            width: 800,
+            height: 400,
+            chartArea:{top: '12.5%', width:'80%',height:'75%'}
+            };
+
+            // Instantiate and draw our chart, passing in some options.          
+            var chart = new google.visualization.PieChart(document.getElementById('chart'));
+
+            google.visualization.events.addListener(chart, 'ready', function(){
+                console.log(chart.getImageURI());
+                document.getElementById('chart').innerHTML = "<img src='" + chart.getImageURI()+"'>";
+                /*
+                $.post("../clases/ajax.php", {ACCION: "guardarImagen", imagen: chart.getImageURI(), nombre: "evaluacion_<?=$idEvaluacionDocente?>", url: "../img/graficas_evaluaciones/"}, 
+                    function(result){
+                        if(result == 1){
+                            $("#btnResumen").attr("hidden", false);
+                        }
+                    }
+                );*/
+            });
+
+            chart.draw(data, options);
+          
+        }
+    </script>
 </head>
 <body>
     <div class="container-fluid" style="padding: 0px !important;">
@@ -56,10 +103,12 @@
                 <center>
                     <br><h4>Evaluaciones</h4><br>                    
                 </center>
+                <div id="chart"></div>
                 <div class="row">
                         <div id="accordion" style="width: 100%;">
                             <?php
                                 foreach($evaluaciones as $evaluacion){
+                                    $datosGrafica = array();
                             ?>
                                     <div class="card">
                                         <div class="card-header bg-successM" id="evaluacion<?=$evaluacion['idEvaluacion']?>">
@@ -77,7 +126,10 @@
                                                     $criterios = $e->getCriterios($evaluacion["idEvaluacion"]);
                                                     foreach($criterios as $criterio){
                                                         echo "<a href='criterio.php?id=".$criterio["idCriterio"]."&criterio=".$criterio["nombre"]."&evaluacion=".$evaluacion["nombre"]."'  class='list-group-item link'>".$criterio["nombre"]." (".$criterio["porcentaje"]."%)</a>";
+                                                        $datosGrafica[] = $criterio["nombre"].",".$criterio["porcentaje"];
                                                     }
+                                                    $datosGrafica = implode("--", $datosGrafica);
+                                                    echo $datosGrafica;
                                                 ?>
                                                 <div class="" style="padding-top: 1em; text-align: right;">
                                                     <a href="form_editarEvaluacion.php?idEvaluacion=<?=$evaluacion['idEvaluacion']?>&nombre=<?=$evaluacion["nombre"]?>&porcentaje=<?=$evaluacion["porcentaje"]?>"><button class="btn btn-success">Editar evaluación</button></a>
@@ -96,7 +148,8 @@
             </div>
         </div>
     </div>
-    <script src="../js/jquery-3.3.1.min.js"></script>
+    
     <script src="../js/bootstrap.min.js"></script>
+
 </body>
 </html>
