@@ -2,7 +2,6 @@
     session_start();
     if($_SESSION["usuario_UnADM"] == "")
         header("location: ../index.php");
-
     require("../clases/docente.php");
     $d = new docente();
     $docente = $d->getDocente($_SESSION["usuario_UnADM"]);
