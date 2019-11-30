@@ -11,7 +11,7 @@
         }
 
         public function getBloques($perfil){
-            $qr = "SELECT * FROM bloque WHERE perfil = $perfil;";
+            $qr = "SELECT * FROM bloque WHERE visible = 1 AND perfil = $perfil;";
             $resultado = query($qr);
             $lista = array();
             $i = 0;

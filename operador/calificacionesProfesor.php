@@ -4,11 +4,13 @@
         header("location: ../index.php");
     require("../clases/evaluacion.php");
     require("../clases/docente.php");
-    $folio =@$_GET["folio"];
+    $folio = (@_GET["folio"]) ? @_GET["folio"] : $_SESSION["usuario_UnADM"];
+	//$folio =@$_GET["folio"];
     $e = new evaluacion();
     $d = new docente();
     $evaluaciones = $e->getListaEvaluaciones();
     $docente = $d->getDocente($folio);
+	$mensajeEvaluacion;
 ?>
 <!DOCTYPE html>
 <html>
@@ -75,13 +77,29 @@
                             <td class="align-middle"><?=$calificacion["periodo"]?></td>
                             <?php
                             foreach($evaluaciones as $evaluacion){
+								if((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) >= 9){
+									$mensajeEvaluacion = 'Muy Bien';
+								}
+									
+								elseif ((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) == 8 ) {
+									$mensajeEvaluacion = 'Bien';								
+								}
+
+								elseif ((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) == 7) {
+									$mensajeEvaluacion = 'Regular';								
+								}
+
+								elseif ((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) < 7) {
+									$mensajeEvaluacion = 'Necesita Mejorar';								
+								}
+
                                 if(is_numeric($calificacion["evaluacion_".$evaluacion["idEvaluacion"]]))
-                                    echo "<td class='align-middle'><a href='resumenEvaluacion.php?evaluacion=".$calificacion["idEvaluacion"]."'>".(round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100)."</a></td>";
+                                    echo "<td class='align-middle'><a href='resumenEvaluacion.php?evaluacion=".$calificacion["idEvaluacion"]."'>".$mensajeEvaluacion."</a></td>";
                                 else
-                                    echo "<td class='align-middle'>".$calificacion["evaluacion_".$evaluacion["idEvaluacion"]]."</td>";
+                                    echo "<td class='align-middle'>".$mensajeEvaluacion."</td>";
                             }
                             ?>
-                            <td class="align-middle"><?=round($calificacion["calificacionFinal"] * 100) / 100?></td>
+                            <td class="align-middle"><?=$mensajeEvaluacion?></td>
                         </tr>
                         <?php
                             }

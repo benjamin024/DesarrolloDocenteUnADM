@@ -41,8 +41,8 @@
 <body>
     <?php
         if($docente["flagPsw"]){
-            $modal = "$('#modalPsw').modal('toggle')";
-            echo "<script>$(document).ready(function(){{$modal}});</script>";
+            //$modal = "$('#modalPsw').modal('toggle')";
+            //echo "<script>$(document).ready(function(){{$modal}});</script>";
         }
 
         require("../clases/ajuste.php");
