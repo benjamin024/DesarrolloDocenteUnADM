@@ -4,7 +4,7 @@
         header("location: ../index.php");
     require("../clases/evaluacion.php");
     require("../clases/docente.php");
-    $folio = (@_GET["folio"]) ? @_GET["folio"] : $_SESSION["usuario_UnADM"];
+    $folio = (@$_GET["folio"]) ? @$_GET["folio"] : $_SESSION["usuario_UnADM"];
 	//$folio =@$_GET["folio"];
     $e = new evaluacion();
     $d = new docente();
@@ -34,7 +34,10 @@
                 include("../navbar.html");
                 $folder = "";
             }
-            else{
+            else if($_SESSION["tipo"] == 1){
+                $folder = "../docente/";
+                include("../navbar-d.html");
+            }else{
                 $folder = "../asesor/";
                 include("../navbar-a.html");
             }
@@ -59,7 +62,7 @@
                         <tr>
                             <th rowspan="2" class="align-middle">Periodo</th>
                             <th colspan="<?=count($evaluaciones)?>" class="align-middle">Evaluaciones</th>
-                            <th rowspan="2" class="align-middle">Calificación final</th>
+                            <th rowspan="2" class="align-middle">Valoración final</th>
                         </tr>
                         <tr>
                             <?php
@@ -76,7 +79,8 @@
                         <tr>
                             <td class="align-middle"><?=$calificacion["periodo"]?></td>
                             <?php
-                            foreach($evaluaciones as $evaluacion){
+                            //foreach($evaluaciones as $evaluacion){
+                            $evaluacion = $evaluaciones[0];
 								if((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) >= 9){
 									$mensajeEvaluacion = 'Muy Bien';
 								}
@@ -97,8 +101,10 @@
                                     echo "<td class='align-middle'><a href='resumenEvaluacion.php?evaluacion=".$calificacion["idEvaluacion"]."'>".$mensajeEvaluacion."</a></td>";
                                 else
                                     echo "<td class='align-middle'>".$mensajeEvaluacion."</td>";
-                            }
+                            //}
                             ?>
+                            <td class="align-middle">Próximamente</td>
+                            <td class="align-middle">Próximamente</td>
                             <td class="align-middle"><?=$mensajeEvaluacion?></td>
                         </tr>
                         <?php

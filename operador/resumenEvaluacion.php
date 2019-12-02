@@ -46,6 +46,10 @@
                 include("../navbar.html");
                 $folder = "";
             }
+            else if($_SESSION["tipo"] == 1){
+                $folder = "../docente/";
+                include("../navbar-d.html");
+            }
             else{
                 $folder = "../asesor/";
                 include("../navbar-a.html");
@@ -57,7 +61,9 @@
                 <center id='latmenu'>
                     <a href="calificacionesProfesor.php?folio=<?=$folio?>" class="boton"><button class="btn btn-success">Regresar</button></a><hr>
                     <button class="btn btn-success" onclick="verGrafica();">Ver gráfico</button>
+                    <!--
                     <br><br><a href="resumenEvaluacionPDF.php?evaluacion=<?=$idEvaluacionDocente?>" target="_blank" class="boton" id="btnResumen" hidden><button class="btn btn-success">Resumen en PDF</button></a>
+                -->
                     <?php
                         if($_SESSION["tipo"] == 2){
                     ?>
@@ -161,10 +167,12 @@
                                 echo "<td><b>$evaluacion, $calificacion puntos</b><br>$msjEvaluacion</td></tr>";
                             }
                             ?>
+                            <!--
                             <tr>
                                 <td class="bg-successM" style="color: #FFF; font-weight: bold; text-align: right;">Calificación promedio del criterio:</td>
                                 <td class="bg-successM" style="color: #FFF; font-weight: bold; text-align: center;"><?=round(query("SELECT calificacion FROM criterioCalificacion WHERE idEvaluacion = $idEvaluacionDocente AND criterio = ".$criterio["idCriterio"])->fetch_assoc()["calificacion"] * 100) / 100?></td>
                             </tr>
+                            -->
                         </table>
                 <?php
                     }
@@ -200,8 +208,20 @@
                 </table>
                 <table class="table table-bordered">
                     <tr>
-                        <td width="80%" class="bg-successM" style="color: #FFF; font-weight: bold; text-align: right;">CALIFICACIÓN FINAL:</td>
-                        <td class="bg-successM" style="color: #FFF; font-weight: bold; text-align: center;"><?=round($calificacionFinal * 100) / 100?></td>
+                        <td width="80%" class="bg-successM" style="color: #FFF; font-weight: bold; text-align: right;">VALORACIÓN FINAL:</td>
+                        <td class="bg-successM" style="color: #FFF; font-weight: bold; text-align: center;">
+                            <?=round($calificacionFinal * 100) / 100?>
+                            <?php
+                                if(round($calificacionFinal * 100) / 100 >= 9)
+                                    echo " (Muy bien)";
+                                else if(round($calificacionFinal * 100) / 100 >= 8)
+                                    echo " (Bien)";
+                                else if(round($calificacionFinal * 100) / 100 >= 7)
+                                    echo " (Regular)";
+                                else
+                                    echo "(Necesita mejorar)";
+                            ?>
+                        </td>
                     </tr>
                 </table><br><br>
                 

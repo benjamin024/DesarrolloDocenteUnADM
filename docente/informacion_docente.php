@@ -106,11 +106,11 @@
             <div class="col-md-2" style="">
                 <br>
                 <center>
-                    <!--<a href="form_actualizarProfesor.php?folio=<?=$folio?>"><button style="width: 100%;" class="btn btn-success">Actualizar información</button></a><br><br>-->
+                    <!--<a href="form_actualizarProfesor.php?folio=<?=$folio?>"><button style="width: 100%;" class="btn btn-success">Actualizar información</button></a><br><br>
                     <a href="infoDocente.php?folio=<?=$folio?>" target="_blank" class="boton"><button style="width: 100%;" class="btn btn-success">Reporte de datos</button></a>
-                    <hr>
+                    <hr>-->
                     
-                    <a href="calificacionesProfesor.php?folio=<?=$folio?>"><button style="width: 100%;" class="btn btn-success">Ver calificaciones</button></a><br><br>
+                    <a href="calificacionesProfesor.php?folio=<?=$folio?>"><button style="width: 100%;" class="btn btn-success">Referencia de evaluación</button></a><br><br>
                 </center>
             </div>
             <div class="col-md-10 align-items-center" style="padding: 0 5%; overflow-y: auto;">
@@ -271,6 +271,7 @@
                                             else
                                                 $checked = "";
                                         ?>
+                                        <!--
                                         <div class="form-group row">
                                             <label for="folio" class="col-sm-3 col-form-label"><b>Diplomado UnADM:</b></label>
                                             <div class="col-sm-9" style="text-align: left;">
@@ -280,6 +281,7 @@
                                                 </label>
                                             </div>
                                         </div>
+                                    -->
                                     </div>
                                     <div id="laboral" class="container tab-pane fade"><br>
                                         <h3>En construcción</h3>

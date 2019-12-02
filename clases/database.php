@@ -1,5 +1,5 @@
 ﻿<?php
-    $conexion = new mysqli("localhost", "root", "", "unadm")
+    $conexion = new mysqli("www.desarrollodocente.com.mx", "desarr39_root", "=h$-j{#qDKOd", "desarr39_unadm")
         or die("No se pudo establecer la conexión con MySQL");
 
     $conexion->set_charset("utf-8");
