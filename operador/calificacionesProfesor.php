@@ -61,6 +61,7 @@
                             foreach($calificaciones as $calificacion){
                         ?>
                         <tr>
+                            
                             <?php
                             //foreach($evaluaciones as $evaluacion){
                             //$evaluacion = $evaluaciones[0];
@@ -84,7 +85,7 @@
                             //        echo "<td class='align-middle'><a href='resumenEvaluacion.php?evaluacion=".$calificacion["idEvaluacion"]."'>".$mensajeEvaluacion."</a></td>";
                             //    else
                             //        echo "<td class='align-middle'>".$mensajeEvaluacion."</td>";
-                            //}
+                            ////}
                             ?>
                         </tr>
                         <?php
@@ -107,6 +108,7 @@
                         </tr>
                     </thead>
 					 <tbody style="text-align: center;" >
+						<td class="align-middle"><?=$calificacion["periodo"]?></td>
 					 </tbody>
                 <?php
                     }else{
