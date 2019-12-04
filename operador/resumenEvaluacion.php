@@ -139,7 +139,7 @@
                             </tr>
                             <tr>
                                 <td width="80%" class="bg-successM" style="color: #FFF; font-weight: bold; text-align: center;">Indicador</td>
-                                <td witdh="20%" class="bg-successM" style="color: #FFF; font-weight: bold; text-align: center;">Calificación</td>
+                                <td witdh="20%" class="bg-successM" style="color: #FFF; font-weight: bold; text-align: center;">Evaluación</td>
                             </tr>
                             <?php
 
@@ -210,16 +210,15 @@
                     <tr>
                         <td width="80%" class="bg-successM" style="color: #FFF; font-weight: bold; text-align: right;">VALORACIÓN FINAL:</td>
                         <td class="bg-successM" style="color: #FFF; font-weight: bold; text-align: center;">
-                            <?=round($calificacionFinal * 100) / 100?>
                             <?php
                                 if(round($calificacionFinal * 100) / 100 >= 9)
-                                    echo " (Muy bien)";
+                                    echo "Muy bien";
                                 else if(round($calificacionFinal * 100) / 100 >= 8)
-                                    echo " (Bien)";
+                                    echo "Bien";
                                 else if(round($calificacionFinal * 100) / 100 >= 7)
-                                    echo " (Regular)";
+                                    echo "Regular";
                                 else
-                                    echo "(Necesita mejorar)";
+                                    echo "Necesita mejorar";
                             ?>
                         </td>
                     </tr>

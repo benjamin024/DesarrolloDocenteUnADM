@@ -17,7 +17,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Calificaciones de <?=$docente["nombres"]." ".$docente["apPaterno"]." ".$docente["apMaterno"]?></title>
+    <title><?=$docente["nombres"]." ".$docente["apPaterno"]." ".$docente["apMaterno"]?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../css/fontawesome-all.css">
@@ -51,7 +51,7 @@
             </div>
             <div class="col-md-10 align-items-center" style="padding: 0 5%;">
                 <center>
-                    <br><h4>Calificaciones de <?=$docente["nombres"]." ".$docente["apPaterno"]." ".$docente["apMaterno"]?></h4><br>                    
+                    <br><h4><?=$docente["nombres"]." ".$docente["apPaterno"]." ".$docente["apMaterno"]?></h4><br>                    
                 </center>
                 <?php
                     $calificaciones = $e->getCalificacionesDocente($folio);
@@ -112,9 +112,25 @@
                         ?>
                     </tbody>
                 </table>
+
+				<table class="table table-bordered table-sm table-responsive">
+                    <thead class="bg-successM" style="text-align: center;">
+                        <tr>
+                            <th rowspan="2" class="align-middle">Periodo</th>
+                            <th rowspan="2" class="align-middle">Planeación Didáctica</th>
+							<th rowspan="2" class="align-middle">Comunicación</th>
+							<th rowspan="2" class="align-middle">Uso y manejo de las herramientas del aula virtual</th>
+							<th rowspan="2" class="align-middle">Actividades Didácticas</th>
+							<th rowspan="2" class="align-middle">Retroalimentación</th>
+							<th rowspan="2" class="align-middle">Estrategias de retención y recuperación de estudiantes</th>
+							<th rowspan="2" class="align-middle">Valoración Final</th>
+                        </tr>
+                    </thead>
+					 <tbody style="text-align: center;" >
+					 </tbody>
                 <?php
                     }else{
-                        echo "<center><h5>No hay calificaciones registradas para este docente</h5></center>";
+                        echo "<center><h5>No hay registros para este docente</h5></center>";
                     }
                 ?>
             </div>
