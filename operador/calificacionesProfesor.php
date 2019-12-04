@@ -57,55 +57,35 @@
                     $calificaciones = $e->getCalificacionesDocente($folio);
                     if($calificaciones){
                 ?>
-                <table class="table table-bordered table-sm table-responsive">
-                    <thead class="bg-successM" style="text-align: center;">
-                        <tr>
-                            <th rowspan="2" class="align-middle">Periodo</th>
-                            <th colspan="<?=count($evaluaciones)?>" class="align-middle">Evaluaciones</th>
-                            <th rowspan="2" class="align-middle">Valoración final</th>
-                        </tr>
-                        <tr>
-                            <?php
-                                foreach($evaluaciones as $evaluacion){
-                                    echo "<th class='align-middle'>".$evaluacion["nombre"]." (".$evaluacion["porcentaje"]."%)</th>";
-                                }
-                            ?>
-                        </tr>
-                    </thead>
-                    <tbody style="text-align: center;" >
                         <?php
                             foreach($calificaciones as $calificacion){
                         ?>
                         <tr>
-                            <td class="align-middle"><?=$calificacion["periodo"]?></td>
                             <?php
                             //foreach($evaluaciones as $evaluacion){
-                            $evaluacion = $evaluaciones[0];
-								if((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) >= 9){
-									$mensajeEvaluacion = 'Muy Bien';
-								}
-									
-								elseif ((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) == 8 ) {
-									$mensajeEvaluacion = 'Bien';								
-								}
-
-								elseif ((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) == 7) {
-									$mensajeEvaluacion = 'Regular';								
-								}
-
-								elseif ((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) < 7) {
-									$mensajeEvaluacion = 'Necesita Mejorar';								
-								}
-
-                                if(is_numeric($calificacion["evaluacion_".$evaluacion["idEvaluacion"]]))
-                                    echo "<td class='align-middle'><a href='resumenEvaluacion.php?evaluacion=".$calificacion["idEvaluacion"]."'>".$mensajeEvaluacion."</a></td>";
-                                else
-                                    echo "<td class='align-middle'>".$mensajeEvaluacion."</td>";
+                            //$evaluacion = $evaluaciones[0];
+							//	if((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) >= 9){
+							//		$mensajeEvaluacion = 'Muy Bien';
+							//	}
+							//		
+							//	elseif ((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) == 8 ) {
+							//		$mensajeEvaluacion = 'Bien';								
+							//	}
+							//
+							//	elseif ((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) == 7) {
+							//		$mensajeEvaluacion = 'Regular';								
+							//	}
+							//
+							//	elseif ((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) < 7) {
+							//		$mensajeEvaluacion = 'Necesita Mejorar';								
+							//	}
+							//
+                            //    if(is_numeric($calificacion["evaluacion_".$evaluacion["idEvaluacion"]]))
+                            //        echo "<td class='align-middle'><a href='resumenEvaluacion.php?evaluacion=".$calificacion["idEvaluacion"]."'>".$mensajeEvaluacion."</a></td>";
+                            //    else
+                            //        echo "<td class='align-middle'>".$mensajeEvaluacion."</td>";
                             //}
                             ?>
-                            <td class="align-middle">Próximamente</td>
-                            <td class="align-middle">Próximamente</td>
-                            <td class="align-middle"><?=$mensajeEvaluacion?></td>
                         </tr>
                         <?php
                             }
