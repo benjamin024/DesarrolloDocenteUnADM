@@ -75,7 +75,7 @@
 							<tbody style="text-align: center;" >
 								<tr>
 								
-									<td class='align-middle'><a href='resumenEvaluacion.php?evaluacion=<?=$calificacion["idEvaluacion"]?>'><?=$calificaciones[0]["periodo"]?></a></td>
+									<td class='align-middle'><a href='resumenEvaluacion.php?evaluacion=<?=$calificaciones[0]["idEvaluacion"]?>'><?=$calificaciones[0]["periodo"]?></a></td>
 									<?php
 										foreach($calificaciones as $calificacion){
 											if ($calificacion["calificacion"] >= 9){
