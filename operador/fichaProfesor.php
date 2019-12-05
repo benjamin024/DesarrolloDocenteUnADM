@@ -129,7 +129,7 @@
                     <?php
                         }
                     ?>
-                    <a href="../operador/calificacionesProfesor.php?folio=<?=$folio?>"><button style="width: 100%;" class="btn btn-success">Ver calificaciones</button></a><br><br>
+                    <a href="../operador/calificacionesProfesor.php?folio=<?=$folio?>"><button style="width: 100%;" class="btn btn-success">Ver Evaluaciones</button></a><br><br>
                 </center>
             </div>
             <div class="col-md-10 align-items-center" style="padding: 0 5%; height: 100%; overflow-y: auto;">
