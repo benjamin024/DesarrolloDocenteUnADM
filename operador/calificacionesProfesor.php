@@ -11,6 +11,7 @@
     $evaluaciones = $e->getListaEvaluaciones();
     $docente = $d->getDocente($folio);
 	$mensajeEvaluacion;
+	$mensajeEvaluacionFinal;
 ?>
 <!DOCTYPE html>
 <html>
@@ -101,8 +102,24 @@
 										?>
 									<?php
 										}
-									?>
-									<td class='align-middle'><?=$calificaciones[0]["final"]?></td>
+									
+										if ($calificaciones[0]["final"] >= 9){
+											$mensajeEvaluacionFinal = 'Muy Bien';
+										}
+								
+										elseif (($calificaciones[0]["final"]>= 8 ) && ($calificaciones[0]["final"] < 9 )) {
+											$mensajeEvaluacionFinal = 'Bien';								
+										}
+						
+										elseif (($calificaciones[0]["final"] >= 7) && ($calificaciones[0]["final"] < 8 )) {
+											$mensajeEvaluacionFinal = 'Regular';								
+										}
+						
+										elseif ($calificaciones[0]["final"] < 7) {
+											$mensajeEvaluacionFinal = 'Necesita Mejorar';								
+										}
+									?>	
+									<td class='align-middle'><b><?=$mensajeEvaluacionFinal?></b></td>
 								</tr>
 							 </tbody>
 						<?php
