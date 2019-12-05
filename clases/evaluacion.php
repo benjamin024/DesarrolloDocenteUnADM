@@ -4,7 +4,7 @@
     class evaluacion{
 
 		public function getIndicadorCalificacion($docente){
-            $query = "SELECT t1.*, t2.periodo, t2.calificacion FROM criterioCalificacion as t1, evaluacionDocente as t2 WHERE t1.idEvaluacion = t2.idEvaluacionDocente AND t2.docente ='$docente' order by t1.criterio asc";
+            $query = "SELECT t1.*, t2.periodo, t2.calificacion as final FROM criterioCalificacion as t1, evaluacionDocente as t2 WHERE t1.idEvaluacion = t2.idEvaluacionDocente AND t2.docente ='$docente' order by t1.criterio asc";
             $calificacionBD = query($query);
 
             $lista = array();

@@ -55,66 +55,60 @@
                 </center>
                 <?php
                     $calificaciones = $e->getIndicadorCalificacion($folio);
-					print_r($calificaciones); exit; 
-					  
-                    if($calificaciones){
-                ?>
-                        <?php
-                            foreach($calificaciones as $calificacion){
+					//print_r($calificaciones);
+					if($calificaciones){
+					?>
+						
+						<table class="table table-bordered table-sm table-responsive">
+							<thead class="bg-successM" style="text-align: center;">
+								<tr>
+									<th rowspan="2" class="align-middle">Periodo</th>
+									<th rowspan="2" class="align-middle">Planeación Didáctica</th>
+									<th rowspan="2" class="align-middle">Comunicación</th>
+									<th rowspan="2" class="align-middle">Uso y manejo de las herramientas del aula virtual</th>
+									<th rowspan="2" class="align-middle">Actividades Didácticas</th>
+									<th rowspan="2" class="align-middle">Retroalimentación</th>
+									<th rowspan="2" class="align-middle">Estrategias de retención y recuperación de estudiantes</th>
+									<th rowspan="2" class="align-middle">Valoración Final</th>
+								</tr>
+							</thead>
+							<tbody style="text-align: center;" >
+								<tr>
+								
+									<td class='align-middle'><a href='resumenEvaluacion.php?evaluacion=<?=$calificacion["idEvaluacion"]?>'><?=$calificaciones[0]["periodo"]?></a></td>
+									<?php
+										foreach($calificaciones as $calificacion){
+											if ($calificacion["calificacion"] >= 9){
+												$mensajeEvaluacion = 'Muy Bien';
+											}
+									
+											elseif (($calificacion["calificacion"] >= 8 ) && ($calificacion["calificacion"] < 9 )) {
+												$mensajeEvaluacion = 'Bien';								
+											}
 							
-                        ?>
-                        <tr>
-                            
-                            <?php
-                            //foreach($evaluaciones as $evaluacion){
-                            //$evaluacion = $evaluaciones[0];
-							//	if((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) >= 9){
-							//		$mensajeEvaluacion = 'Muy Bien';
-							//	}
-							//		
-							//	elseif ((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) == 8 ) {
-							//		$mensajeEvaluacion = 'Bien';								
-							//	}
-							//
-							//	elseif ((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) == 7) {
-							//		$mensajeEvaluacion = 'Regular';								
-							//	}
-							//
-							//	elseif ((round($calificacion["evaluacion_".$evaluacion["idEvaluacion"]] * 100) / 100) < 7) {
-							//		$mensajeEvaluacion = 'Necesita Mejorar';								
-							//	}
-							//
-                            //    if(is_numeric($calificacion["evaluacion_".$evaluacion["idEvaluacion"]]))
-                            //        echo "<td class='align-middle'><a href='resumenEvaluacion.php?evaluacion=".$calificacion["idEvaluacion"]."'>".$mensajeEvaluacion."</a></td>";
-                            //    else
-                            //        echo "<td class='align-middle'>".$mensajeEvaluacion."</td>";
-                            ////}
-                            ?>
-                        </tr>
-                        <?php
-                            }
-                        ?>
-                    </tbody>
-                </table>
-
-				<table class="table table-bordered table-sm table-responsive">
-                    <thead class="bg-successM" style="text-align: center;">
-                        <tr>
-                            <th rowspan="2" class="align-middle">Periodo</th>
-                            <th rowspan="2" class="align-middle">Planeación Didáctica</th>
-							<th rowspan="2" class="align-middle">Comunicación</th>
-							<th rowspan="2" class="align-middle">Uso y manejo de las herramientas del aula virtual</th>
-							<th rowspan="2" class="align-middle">Actividades Didácticas</th>
-							<th rowspan="2" class="align-middle">Retroalimentación</th>
-							<th rowspan="2" class="align-middle">Estrategias de retención y recuperación de estudiantes</th>
-							<th rowspan="2" class="align-middle">Valoración Final</th>
-                        </tr>
-                    </thead>
-					 <tbody style="text-align: center;" >
-						<td class="align-middle"><?=$calificacion["periodo"]?></td>
-					 </tbody>
-                <?php
-                    }else{
+											elseif (($calificacion["calificacion"]  >= 7) && ($calificacion["calificacion"] < 8 )) {
+												$mensajeEvaluacion = 'Regular';								
+											}
+							
+											elseif ($calificacion["calificacion"] < 7) {
+												$mensajeEvaluacion = 'Necesita Mejorar';								
+											}
+							
+											if(is_numeric($calificacion["calificacion"]))
+												echo "<td class='align-middle'>".$mensajeEvaluacion."</td>";
+											else
+												echo "<td class='align-middle'>".$mensajeEvaluacion."</td>";
+										?>
+									<?php
+										}
+									?>
+									<td class='align-middle'><?=$calificaciones[0]["final"]?></td>
+								</tr>
+							 </tbody>
+						<?php
+                    }
+					
+					else{
                         echo "<center><h5>No hay registros para este docente</h5></center>";
                     }
                 ?>
