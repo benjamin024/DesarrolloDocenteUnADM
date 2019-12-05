@@ -108,7 +108,8 @@
                         <div id="accordion" style="width: 100%;">
                             <?php
                                 foreach($evaluaciones as $evaluacion){
-                                    $datosGrafica = array();
+
+									$datosGrafica = array();
                             ?>
                                     <div class="card">
                                         <div class="card-header bg-successM" id="evaluacion<?=$evaluacion['idEvaluacion']?>">

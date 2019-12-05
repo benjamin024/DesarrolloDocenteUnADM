@@ -3,7 +3,7 @@
 
     class evaluacion{
         public function getListaEvaluaciones(){
-            $query = "SELECT * FROM evaluacion";
+            $query = "SELECT * FROM evaluacion where id_evaluacion = 1";
             $resultado = query($query);
             $lista = array();
             $i = 0;
