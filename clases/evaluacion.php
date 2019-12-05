@@ -2,8 +2,19 @@
     include_once("database.php");
 
     class evaluacion{
+
+		public function getIndicadorCalificacion($docente){
+            $query = "SELECT t1.*, t2.periodo, t2.calificacion FROM criterioCalificacion as t1, evaluacionDocente as t2 WHERE t1.idEvaluacion = t2.idEvaluacionDocente AND t2.docente ='$docente' order by t1.criterio asc";
+            $calificacionBD = query($query);
+            if($calificacionBD->num_rows > 0)
+                $calificacion = $calificacionBD->fetch_assoc()["calificacion"];
+            else
+                $calificacion = 0;
+            return $calificacion;
+        }
+
         public function getListaEvaluaciones(){
-            $query = "SELECT * FROM evaluacion where id_evaluacion = 1";
+            $query = "SELECT * FROM evaluacion where idEvaluacion = 1";
             $resultado = query($query);
             $lista = array();
             $i = 0;

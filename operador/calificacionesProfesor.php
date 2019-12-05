@@ -54,11 +54,14 @@
                     <br><h4><?=$docente["nombres"]." ".$docente["apPaterno"]." ".$docente["apMaterno"]?></h4><br>                    
                 </center>
                 <?php
-                    $calificaciones = $e->getCalificacionesDocente($folio);
+                    $calificaciones = $e->getIndicadorCalificacion($folio);
+					print_r($calificaciones); exit; 
+					  
                     if($calificaciones){
                 ?>
                         <?php
                             foreach($calificaciones as $calificacion){
+							
                         ?>
                         <tr>
                             
